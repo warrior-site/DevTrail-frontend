@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import MainRoutes from './routes/MainRoutes'
 import { checkAuthStatus } from './store/userAction'
 import { useDispatch } from "react-redux"
 import './index.css'
 import Nav from './components/Nav'
+import SideNavbar from './components/SideNavbar'
 
 function App() {
   const dispatch = useDispatch();
+  
 
   useEffect(() => {
     dispatch(checkAuthStatus());
@@ -38,12 +40,19 @@ function App() {
       </div>
 
       {/* App content */}
-      <main className="main-app relative z-10 min-h-screen flex flex-col">
-        <Nav className="absolute top-0 w-full" />
-        <div className="flex-1 flex items-center justify-center">
+     <main className="main-app relative z-10 min-h-screen flex">
+      {/* Sidebar */}
+      <SideNavbar  />
+       {/* isOpen={isOpen} setIsOpen={setIsOpen} */}
+      {/* Content area */}
+      <div className="flex-1 flex flex-col "> 
+        {/* 👆 pl-60 instead of ml-60 */}
+        {/* <span className={`${isOpen ? "pl-60" : "pl-[10vw]"} `}></span> */}
+        <div className="flex-1 flex items-center justify-center p-6 pl-[10vw]">
           <MainRoutes />
         </div>
-      </main>
+      </div>
+    </main>
 
     </div>
   )

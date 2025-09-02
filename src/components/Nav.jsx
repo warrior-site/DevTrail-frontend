@@ -45,7 +45,7 @@ export default function Nav({ isAuthenticated, onLogout }) {
         <div className="relative">
           <button
             onClick={() => setOpen(!open)}
-            className="flex items-center gap-1 px-3 py-2 bg-gray-800 rounded-md hover:bg-gray-700"
+            className="flex items-center gap-1 px-3 py-2 bg-gray-800 rounded-md hover:bg-gray-700 "
           >
             Navigate <ChevronDown size={16} />
           </button>

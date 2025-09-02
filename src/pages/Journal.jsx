@@ -21,7 +21,8 @@ function Journal() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">📓 My Journals</h1>
+      <div className="flex flex-row items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold mb-6">📓 My Journals</h1>
 
       {/* Toggle Button */}
       <button
@@ -30,6 +31,8 @@ function Journal() {
       >
         {isCreateForm ? "Close Form" : "Create Journal"}
       </button>
+      </div>
+      
 
       {/* Conditional Rendering */}
       {isCreateForm ? (
@@ -37,9 +40,12 @@ function Journal() {
       ) : loading ? (
         <p className="text-gray-400">Loading journals...</p>
       ) : (
-        <div className=" gap-6 flex flex-wrap">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {journals.length === 0 ? (
-            <p className="text-gray-400">No journals found.Either Click "Create Journal" to add one Or Click "Fetch Journal".</p>
+            <p className="text-gray-400 col-span-full">
+              No journals found. Either click "Create Journal" to add one or
+              click "Fetch Journals".
+            </p>
           ) : (
             journals.map((journal, idx) => (
               <motion.div
@@ -47,7 +53,7 @@ function Journal() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.2, duration: 0.5 }}
-                className="bg-gray-900 text-white rounded-2xl p-5 w-[30%] shadow-lg border border-gray-700"
+                className="bg-gray-900 text-white rounded-2xl p-5 shadow-lg border border-gray-700"
               >
                 <h2 className="text-xl font-semibold">{journal.title}</h2>
                 <p className="text-gray-300 mt-2">{journal.content}</p>
@@ -88,14 +94,17 @@ function Journal() {
                 )}
 
                 <p className="text-xs text-gray-500 mt-3">
-                  Created at: {new Date(journal.createdAt).toLocaleDateString()}
+                  Created at:{" "}
+                  {new Date(journal.createdAt).toLocaleDateString()}
                 </p>
               </motion.div>
             ))
           )}
         </div>
       )}
-      {!isCreateForm && (
+
+      {/* Fetch button (only if no journals and not in create mode) */}
+      {!isCreateForm && journals.length === 0 && (
         <button
           onClick={handleFetch}
           className="mt-6 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-white font-medium transition"
@@ -103,7 +112,6 @@ function Journal() {
           Fetch Journals
         </button>
       )}
-
     </div>
   );
 }

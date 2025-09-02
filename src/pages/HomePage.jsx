@@ -1,17 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
+import "./stylePage.css"
 
 function HomePage() {
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white flex flex-col">
-      
+    <div className="min-h-screen w-full  text-white flex flex-col">
+      {/* bg-gradient-to-br from-black via-gray-900 to-gray-800 */}
       {/* Hero Section */}
-      <header className="flex-1 flex flex-col items-center justify-center text-center px-6 py-20">
+      <header className="header-home flex-1 flex flex-col items-center justify-center text-center px-6 py-20">
         <motion.h1
           initial={{ opacity: 0, y: -40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-transparent drop-shadow-lg"
+          className="header-h1 text-5xl md:text-6xl  font-extrabold bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 bg-clip-text text-transparent drop-shadow-lg"
         >
           DevTrail – Developer Management Hub
         </motion.h1>
@@ -77,7 +78,7 @@ function HomePage() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 1 }}
-          className="text-3xl font-bold mb-6 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-transparent bg-clip-text"
+          className="section-h3 text-3xl font-bold mb-6 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-transparent bg-clip-text"
         >
           Ready to supercharge your developer journey?
         </motion.h3>
@@ -91,7 +92,8 @@ function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto py-6 text-center border-t border-gray-700 bg-gradient-to-r from-gray-900 via-black to-gray-900">
+      <footer className="mt-auto py-6 text-center ">
+        {/* border-t border-gray-700 bg-gradient-to-r from-gray-900 via-black to-gray-900 */}
         <p className="text-gray-400 text-sm">
           Made with 💻 by <span className="text-green-400 font-semibold">DevTrail</span>  
           | © {new Date().getFullYear()}

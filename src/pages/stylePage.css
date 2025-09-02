@@ -1,0 +1,22 @@
+@media (max-width: 768px) {
+   .header-home {
+       padding: 1rem;
+   }
+
+   .header-h1 {
+       font-size: 2rem;
+   }
+   .section-h3 {
+       font-size: 1.5rem;
+       padding: 0.5rem;
+   }
+
+   .project-butoon-row {
+       flex-direction: column;
+       align-items: flex-start;
+       gap:1rem;
+   }
+   .main-box{
+    flex-direction: column;
+   }
+}

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchProjects } from "../store/projectAction";
 import ProjectCreate from "../components/ProjectCreate";
+import "./stylePage.css"
 
 const ProjectPage = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const ProjectPage = () => {
 
   return (
     <div className="w-full min-h-screen text-white flex flex-col items-center py-10 px-4">
-      <div className="flex justify-between items-center w-full max-w-6xl mb-8">
+      <div className="project-butoon-row flex justify-between items-center w-full max-w-6xl mb-8">
         <h1 className="text-3xl font-bold text-green-400">Projects</h1>
         <button
           onClick={() => setIsCreateForm((prev) => !prev)}

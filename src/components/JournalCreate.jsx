@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createJournalAction } from "../store/journalAction";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-/**
- * Props:
- *  - onSubmit: (payload) => void | Promise<void>
- *  - defaultValues?: { title, content, tags, visibility, attachments }
- */
 export default function JournalForm({ onSubmit, defaultValues }) {
   const [title, setTitle] = useState(defaultValues?.title || "");
   const [content, setContent] = useState(defaultValues?.content || "");
@@ -22,8 +17,7 @@ export default function JournalForm({ onSubmit, defaultValues }) {
 
   const addTag = () => {
     const t = tagInput.trim();
-    if (!t) return;
-    if (tags.includes(t)) return;
+    if (!t || tags.includes(t)) return;
     setTags((prev) => [...prev, t]);
     setTagInput("");
   };
@@ -50,7 +44,6 @@ export default function JournalForm({ onSubmit, defaultValues }) {
     e.preventDefault();
     setError("");
 
-    // minimal client-side validation matching schema requirements
     if (!title.trim()) return setError("Title is required.");
     if (!content.trim()) return setError("Content is required.");
     if (!Array.isArray(tags) || tags.length === 0) return setError("At least one tag is required.");
@@ -62,14 +55,7 @@ export default function JournalForm({ onSubmit, defaultValues }) {
 
     try {
       setBusy(true);
-      const payload = {
-        title: title.trim(),
-        content: content.trim(),
-        tags,
-        visibility,
-        attachments,
-        userId
-      };
+      const payload = { title, content, tags, visibility, attachments, userId };
       await onSubmit?.(payload);
       await dispatch(createJournalAction(payload));
     } catch (err) {
@@ -80,12 +66,12 @@ export default function JournalForm({ onSubmit, defaultValues }) {
   };
 
   return (
-    <div className="relative flex items-center justify-center py-10">
-      {/* Soft gradient glows (blushing) */}
+    <div className="relative flex items-center justify-center py-6 sm:py-10 px-3 sm:px-6">
+      {/* Gradient Glows */}
       <div className="pointer-events-none absolute -z-10 inset-0">
-        <div className="absolute left-10 top-10 w-40 h-40 rounded-full bg-fuchsia-500/20 blur-3xl" />
-        <div className="absolute right-12 bottom-16 w-48 h-48 rounded-full bg-cyan-500/20 blur-3xl" />
-        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="absolute left-5 top-5 sm:left-10 sm:top-10 w-28 h-28 sm:w-40 sm:h-40 rounded-full bg-fuchsia-500/20 blur-3xl" />
+        <div className="absolute right-6 bottom-10 sm:right-12 sm:bottom-16 w-32 h-32 sm:w-48 sm:h-48 rounded-full bg-cyan-500/20 blur-3xl" />
+        <div className="absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 w-48 h-48 sm:w-64 sm:h-64 rounded-full bg-emerald-500/10 blur-3xl" />
       </div>
 
       <motion.form
@@ -93,11 +79,11 @@ export default function JournalForm({ onSubmit, defaultValues }) {
         initial={{ opacity: 0, y: 24, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="w-[40vw]  rounded-2xl border border-white/10 bg-gradient-to-br from-zinc-900 via-black to-zinc-900 p-5 shadow-xl shadow-fuchsia-500/5"
+        className="w-full max-w-2xl sm:w-[40vw] rounded-2xl border border-white/10 bg-gradient-to-br from-zinc-900 via-black to-zinc-900 p-4 sm:p-5 shadow-xl shadow-fuchsia-500/5"
       >
         <div className="mb-4">
-          <h2 className="text-xl font-semibold text-white">New Journal</h2>
-          <p className="text-sm text-zinc-400">Dark • Animated • Glowy</p>
+          <h2 className="text-lg sm:text-xl font-semibold text-white">New Journal</h2>
+          <p className="text-xs sm:text-sm text-zinc-400">Dark • Animated • Glowy</p>
         </div>
 
         {/* Title */}
@@ -108,18 +94,18 @@ export default function JournalForm({ onSubmit, defaultValues }) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="A tiny love letter to code…"
-          className="w-full mb-3 rounded-lg bg-zinc-900/70 border border-white/10 px-3 py-2 text-white outline-none placeholder:text-zinc-500"
+          className="w-full mb-3 rounded-lg bg-zinc-900/70 border border-white/10 px-3 py-2 text-white outline-none placeholder:text-zinc-500 text-sm sm:text-base"
         />
 
         {/* Content */}
         <label className="block text-sm text-zinc-300 mb-1">Content *</label>
         <motion.textarea
           whileFocus={{ boxShadow: "0 0 0 2px rgba(59,130,246,0.35)" }}
-          rows={5}
+          rows={4}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Write your thoughts…"
-          className="w-full mb-3 rounded-lg bg-zinc-900/70 border border-white/10 px-3 py-2 text-white outline-none placeholder:text-zinc-500 resize-y"
+          className="w-full mb-3 rounded-lg bg-zinc-900/70 border border-white/10 px-3 py-2 text-white outline-none placeholder:text-zinc-500 text-sm sm:text-base resize-y"
         />
 
         {/* Tags */}
@@ -131,7 +117,7 @@ export default function JournalForm({ onSubmit, defaultValues }) {
             value={tagInput}
             onChange={(e) => setTagInput(e.target.value)}
             placeholder="e.g. mern_stack"
-            className="flex-1 rounded-lg bg-zinc-900/70 border border-white/10 px-3 py-2 text-white outline-none placeholder:text-zinc-500"
+            className="flex-1 rounded-lg bg-zinc-900/70 border border-white/10 px-3 py-2 text-white outline-none placeholder:text-zinc-500 text-sm sm:text-base"
           />
           <motion.button
             type="button"
@@ -150,7 +136,7 @@ export default function JournalForm({ onSubmit, defaultValues }) {
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
-                className="inline-flex items-center gap-2 rounded-full border border-fuchsia-400/30 bg-fuchsia-500/10 px-3 py-1 text-xs text-fuchsia-200"
+                className="inline-flex items-center gap-2 rounded-full border border-fuchsia-400/30 bg-fuchsia-500/10 px-3 py-1 text-xs sm:text-sm text-fuchsia-200"
               >
                 {t}
                 <button
@@ -168,11 +154,11 @@ export default function JournalForm({ onSubmit, defaultValues }) {
 
         {/* Visibility */}
         <label className="block text-sm text-zinc-300 mb-1">Visibility</label>
-        <div className="mb-4 flex items-center gap-3">
+        <div className="mb-4 flex flex-wrap gap-3">
           {["private", "public"].map((opt) => (
             <label
               key={opt}
-              className={`cursor-pointer rounded-lg border px-3 py-2 text-sm transition
+              className={`cursor-pointer rounded-lg border px-3 py-2 text-sm transition flex-1 sm:flex-none text-center
                 ${visibility === opt
                   ? "border-cyan-400/40 bg-cyan-500/10 text-cyan-200"
                   : "border-white/10 bg-zinc-900/70 text-zinc-300 hover:border-white/20"}`}
@@ -211,25 +197,23 @@ export default function JournalForm({ onSubmit, defaultValues }) {
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -6 }}
-                className="grid grid-cols-1 gap-2 rounded-lg border border-white/10 bg-zinc-900/60 p-3"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-2 rounded-lg border border-white/10 bg-zinc-900/60 p-3"
               >
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={att.filename}
-                    onChange={(e) => updateAttachment(idx, "filename", e.target.value)}
-                    placeholder="filename.ext"
-                    className="flex-1 rounded-md bg-black/50 border border-white/10 px-3 py-2 text-sm text-white placeholder:text-zinc-500 outline-none"
-                  />
-                  <input
-                    type="url"
-                    value={att.url}
-                    onChange={(e) => updateAttachment(idx, "url", e.target.value)}
-                    placeholder="https://…"
-                    className="flex-1 rounded-md bg-black/50 border border-white/10 px-3 py-2 text-sm text-white placeholder:text-zinc-500 outline-none"
-                  />
-                </div>
-                <div className="flex justify-end">
+                <input
+                  type="text"
+                  value={att.filename}
+                  onChange={(e) => updateAttachment(idx, "filename", e.target.value)}
+                  placeholder="filename.ext"
+                  className="w-full rounded-md bg-black/50 border border-white/10 px-3 py-2 text-sm text-white placeholder:text-zinc-500 outline-none"
+                />
+                <input
+                  type="url"
+                  value={att.url}
+                  onChange={(e) => updateAttachment(idx, "url", e.target.value)}
+                  placeholder="https://…"
+                  className="w-full rounded-md bg-black/50 border border-white/10 px-3 py-2 text-sm text-white placeholder:text-zinc-500 outline-none"
+                />
+                <div className="flex justify-end sm:col-span-2">
                   <button
                     type="button"
                     onClick={() => removeAttachment(idx)}
@@ -250,19 +234,19 @@ export default function JournalForm({ onSubmit, defaultValues }) {
               initial={{ opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -6 }}
-              className="mb-3 rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-200"
+              className="mb-3 rounded-md border border-red-500/30 bg-red-500/10 px-3 py-2 text-xs sm:text-sm text-red-200"
             >
               {error}
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Actions */}
+        {/* Submit */}
         <motion.button
           type="submit"
           disabled={busy}
           whileTap={{ scale: 0.98 }}
-          className={`w-full rounded-lg px-4 py-2 font-medium transition
+          className={`w-full rounded-lg px-4 py-2 font-medium transition text-sm sm:text-base
             ${busy
               ? "bg-zinc-700 text-zinc-300 cursor-not-allowed"
               : "bg-gradient-to-r from-fuchsia-600/80 to-cyan-600/80 hover:from-fuchsia-500/80 hover:to-cyan-500/80 text-white shadow-lg shadow-fuchsia-500/20"}`}

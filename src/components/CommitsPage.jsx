@@ -36,7 +36,10 @@ const CommitsPage = () => {
   if (!selectedRepo) {
     return (
       <div className="p-6 text-red-400">
-        Repo not found. <Link to="/repo" className="underline">Go back</Link>
+        Repo not found.{" "}
+        <Link to="/repo" className="underline">
+          Go back
+        </Link>
       </div>
     );
   }
@@ -47,28 +50,31 @@ const CommitsPage = () => {
 
   return (
     <div className="p-6 text-white min-h-screen">
+      {/* Back Link */}
       <Link to={`/repo/${id}`} className="text-green-400 underline">
         ← Back to Repo
       </Link>
 
+      {/* Page Title */}
       <h1 className="text-2xl font-bold text-green-400 mt-4">
         Commits for {selectedRepo.name}
       </h1>
 
-      <div className="mt-6 space-y-6 gap-x-5 flex flex-wrap">
+      {/* Commits Grid */}
+      <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {commits.length > 0 ? (
           commits.map((commit) => (
             <div
               key={commit.sha}
-              className="bg-[#111] p-5 w-[30vw] rounded-xl border border-green-500/30 shadow-lg hover:shadow-green-400/30 transition"
+              className="bg-[#111] p-5 rounded-xl border border-green-500/30 shadow-lg hover:shadow-green-400/30 transition"
             >
               {/* Commit Message */}
-              <h2 className="text-lg font-semibold text-green-300">
+              <h2 className="text-lg font-semibold text-green-300 break-words">
                 {commit.commit.message}
               </h2>
 
               {/* Author Info */}
-              <div className="flex items-center mt-2">
+              <div className="flex items-center mt-3">
                 {commit.author && (
                   <img
                     src={commit.author.avatar_url}
@@ -88,12 +94,12 @@ const CommitsPage = () => {
                 SHA: {commit.sha.substring(0, 7)}...
               </p>
 
-              {/* View Commit on GitHub */}
+              {/* View Commit */}
               <a
                 href={commit.html_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-blue-400 underline mt-2 block"
+                className="text-sm text-blue-400 underline mt-3 inline-block"
               >
                 View Commit →
               </a>
