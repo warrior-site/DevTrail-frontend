@@ -9,7 +9,7 @@ export const fetchProjects = (userId) => {
     try {
         console.log("Fetching projects for user:", userId);
       const response = await axios.get(
-        `http://localhost:5000/api/project/all-projects/${userId}`
+        `https://devtrail-backend.onrender.com/api/project/all-projects/${userId}`
       );
       dispatch(setProject(response.data));
     } catch (error) {
@@ -26,7 +26,7 @@ export const fetchOneProject = (projectId) => {
     dispatch(setLoading(true));
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/project/get-one-project/${projectId}`
+        `https://devtrail-backend.onrender.com/api/project/get-one-project/${projectId}`
       );
       dispatch(setProject(response.data));
     } catch (error) {
@@ -43,7 +43,7 @@ export const createProjectAction = (projectData) => {
     dispatch(setLoading(true));
     try {
       await axios.post(
-        `http://localhost:5000/api/project/create-project`,
+        `https://devtrail-backend.onrender.com/api/project/create-project`,
         projectData
       );
       dispatch(fetchProjects(projectData.userId)); // Refresh list
@@ -61,7 +61,7 @@ export const updateProjectAction = (projectData) => {
     dispatch(setLoading(true));
     try {
       await axios.post(
-        `http://localhost:5000/api/project/update-project/${projectData.projectId}`,
+        `https://devtrail-backend.onrender.com/api/project/update-project/${projectData.projectId}`,
         projectData
       );
       console.log("Project updated successfully");
@@ -80,7 +80,7 @@ export const deleteProjectAction = ({ projectId, userId }) => {
     dispatch(setLoading(true));
     try {
       await axios.post(
-        `http://localhost:5000/api/project/delete-project/${projectId}`
+        `https://devtrail-backend.onrender.com/api/project/delete-project/${projectId}`
       );
       dispatch(fetchProjects(userId)); // Refresh list
     } catch (error) {
@@ -97,7 +97,7 @@ export const starProjectAction = ({ projectId, userId }) => {
     dispatch(setLoading(true));
     try {
       await axios.post(
-        `http://localhost:5000/api/project/star-project/${projectId}`
+        `https://devtrail-backend.onrender.com/api/project/star-project/${projectId}`
       );
       dispatch(fetchProjects(userId)); // Refresh list
     } catch (error) {

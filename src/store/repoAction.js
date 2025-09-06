@@ -7,7 +7,7 @@ export const fetchRepos = ({ userId, githubUsername }) => {
     dispatch(setLoading(true));
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/github/sync`,
+        `https://devtrail-backend.onrender.com/api/github/sync`,
         { userId, githubUsername }
       );
 

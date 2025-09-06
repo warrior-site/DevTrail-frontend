@@ -8,7 +8,7 @@ export const fetchJournals = (userId) => {
     dispatch(setLoading(true));
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/journal/all-journal/${userId}`
+        `https://devtrail-backend.onrender.com/api/journal/all-journal/${userId}`
       );
       dispatch(setJournal(response.data));
     } catch (error) {
@@ -25,7 +25,7 @@ export const fetchOneJournal = (journalId) => {
     dispatch(setLoading(true));
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/journal/get-one-journal/${journalId}`
+        `https://devtrail-backend.onrender.com/api/journal/get-one-journal/${journalId}`
       );
       dispatch(setJournal(response.data));
     } catch (error) {
@@ -42,7 +42,7 @@ export const createJournalAction = (journalData) => {
     dispatch(setLoading(true));
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/journal/create-journal`,
+        `https://devtrail-backend.onrender.com/api/journal/create-journal`,
         journalData
       );
       dispatch(fetchJournals(journalData.userId)); // Refresh list
@@ -60,7 +60,7 @@ export const updateJournalAction = (journalData) => {
     dispatch(setLoading(true));
     try {
       await axios.post(
-        `http://localhost:5000/api/journal/update-journal`,
+        `https://devtrail-backend.onrender.com/api/journal/update-journal`,
         journalData
       );
       dispatch(fetchJournals(journalData.userId)); // Refresh list
@@ -78,7 +78,7 @@ export const deleteJournalAction = ({ journalId, userId }) => {
     dispatch(setLoading(true));
     try {
       await axios.post(
-        `http://localhost:5000/api/journal/delete-journal`,
+        `https://devtrail-backend.onrender.com/api/journal/delete-journal`,
         { journalId }
       );
       dispatch(fetchJournals(userId)); // Refresh list
@@ -96,7 +96,7 @@ export const starJournalAction = ({ journalId, userId }) => {
     dispatch(setLoading(true));
     try {
       await axios.post(
-        `http://localhost:5000/api/journal/star-journal`,
+        `https://devtrail-backend.onrender.com/api/journal/star-journal`,
         { journalId }
       );
       dispatch(fetchJournals(userId)); // Refresh list
