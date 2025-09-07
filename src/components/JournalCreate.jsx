@@ -66,7 +66,7 @@ export default function JournalForm({ onSubmit, defaultValues }) {
   };
 
   return (
-    <div className="relative flex items-center justify-center py-6 sm:py-10 px-3 sm:px-6">
+    <div className="relative flex items-center justify-center py-6 sm:py-10 px-3 sm:px-6 pl-1">
       {/* Gradient Glows */}
       <div className="pointer-events-none absolute -z-10 inset-0">
         <div className="absolute left-5 top-5 sm:left-10 sm:top-10 w-28 h-28 sm:w-40 sm:h-40 rounded-full bg-fuchsia-500/20 blur-3xl" />
