@@ -14,7 +14,7 @@ export const checkAuthStatus = () => async (dispatch,getstate) =>{
     dispatch(setLoading(false));
   }
 }
-
+//just for commit
 export const signupUser = (userData) => async (dispatch, getState) => {
   dispatch(setLoading(true));
   try {
