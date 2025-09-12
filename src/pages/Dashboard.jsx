@@ -4,13 +4,19 @@ import { logoutUser } from "../store/userAction";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import "./stylePage.css"
+import { toast } from "react-toastify";
 
 function Dashboard() {
   const { loading, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
-  const logoutHandle = () => {
-    dispatch(logoutUser());
+  const logoutHandle = async () => {
+    const response = await dispatch(logoutUser());
+    if (response.data.success) {
+      toast.success(response.data.message)
+    } else {
+      toast.error(response.data.message)
+    }
   };
 
   if (!user) {
@@ -46,7 +52,7 @@ function Dashboard() {
             {user.isVerified ? "✅ Verified" : "❌ Not Verified"}
           </p>
 
-           {/* Bio */}
+          {/* Bio */}
           <section>
             <h2 className="text-xl font-semibold text-cyan-300 mb-2 mt-10">💡 Bio</h2>
             <p className="text-gray-300 italic leading-relaxed">

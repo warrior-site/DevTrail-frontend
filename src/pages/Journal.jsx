@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchJournals } from "../store/journalAction";
 import JournalCreate from "../components/JournalCreate";
+import {toast} from "react-toastify"
 
 function Journal() {
   const dispatch = useDispatch();
@@ -13,15 +14,26 @@ function Journal() {
   const { loading, journal } = useSelector((state) => state.journal);
   const journals = journal?.data || [];
 
-  const handleFetch = async () => {
-    if (!userId) return console.error("User ID not found!");
-    await dispatch(fetchJournals(userId));
-    console.log("Fetched journals for user:", userId);
-  };
+useEffect(()=>{
+  const  fetch = async ()=>{
+    if(userId && journals.length === 0){
+     const response = await dispatch(fetchJournals(userId));
+      console.log("Fetched journals for user:", userId);
+      console.log(response)
+      if (response.data.message) {
+            toast.success(response.data.message)
+          } else {
+            toast.error(response.data.message)
+          }
+    }
+  }
+  fetch();
+},[userId,journals.length,dispatch]);
+ 
 
   return (
-    <div className="p-6">
-      <div className="flex flex-row items-center justify-between mb-6">
+    <div className="p-6 w-full min-h-screen">
+      <div className="flex flex-row items-center justify-between w-full mb-6">
         <h1 className="text-2xl font-bold mb-6">📓 My Journals</h1>
 
       {/* Toggle Button */}
@@ -93,7 +105,7 @@ function Journal() {
                   </div>
                 )}
 
-                <p className="text-xs text-gray-500 mt-3">
+                <p className="text-xl text-gray-500 mt-3">
                   Created at:{" "}
                   {new Date(journal.createdAt).toLocaleDateString()}
                 </p>
@@ -104,14 +116,14 @@ function Journal() {
       )}
 
       {/* Fetch button (only if no journals and not in create mode) */}
-      {!isCreateForm && journals.length === 0 && (
+      {/* {!isCreateForm && journals.length === 0 && (
         <button
           onClick={handleFetch}
           className="mt-6 px-4 py-2 bg-green-600 hover:bg-green-700 rounded-lg text-white font-medium transition"
         >
           Fetch Journals
         </button>
-      )}
+      )} */}
     </div>
   );
 }

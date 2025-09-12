@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { createProjectAction } from "../store/projectAction";
+import { toast } from "react-toastify";
 
 function ProjectCreate({ onClose }) {
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.user?._id);
-
+  const [loading, setloading] = useState(false)
   const [formData, setFormData] = useState({
     title: "",
     repoLink: "",
@@ -16,11 +17,11 @@ function ProjectCreate({ onClose }) {
     techStack: ""
   });
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!userId) return console.error("User not found!");
 
@@ -29,8 +30,15 @@ function ProjectCreate({ onClose }) {
       userId,
       techStack: formData.techStack.split(",").map((t) => t.trim())
     };
-
-    dispatch(createProjectAction(payload));
+    setloading(true)
+    const response = await dispatch(createProjectAction(payload));
+    setloading(false)
+    console.log("Create Project Response:", response);
+    if (response.data.message) {
+      toast.success(response.data.message)
+    } else {
+      toast.error(response.data.message)
+    }
     onClose && onClose(); // close form after submit
   };
 
@@ -106,9 +114,13 @@ function ProjectCreate({ onClose }) {
         <div className="flex gap-4 mt-6">
           <button
             type="submit"
-            className="flex-1 py-2 bg-green-500 hover:bg-green-600 rounded-lg font-bold transition"
+            className="flex-1 py-2 bg-green-500 hover:bg-green-600 rounded-lg flex items-center justify-center font-bold transition"
           >
-            Create
+           {loading ? (
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              "Create"
+            )}
           </button>
           {onClose && (
             <button

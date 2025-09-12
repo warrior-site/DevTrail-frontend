@@ -12,6 +12,7 @@ export const fetchProjects = (userId) => {
         `https://devtrail-backend.onrender.com/api/project/all-projects/${userId}`
       );
       dispatch(setProject(response.data));
+      return response
     } catch (error) {
       dispatch(setError(error.message));
     } finally {
@@ -42,11 +43,12 @@ export const createProjectAction = (projectData) => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      await axios.post(
+     const response = await axios.post(
         `https://devtrail-backend.onrender.com/api/project/create-project`,
         projectData
       );
       dispatch(fetchProjects(projectData.userId)); // Refresh list
+      return response;
     } catch (error) {
       dispatch(setError(error.message));
     } finally {

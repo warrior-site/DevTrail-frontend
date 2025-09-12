@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchProjects } from "../store/projectAction";
 import ProjectCreate from "../components/ProjectCreate";
 import "./stylePage.css"
+import { toast } from "react-toastify";
 
 const ProjectPage = () => {
   const dispatch = useDispatch();
@@ -13,12 +14,27 @@ const ProjectPage = () => {
 
   const [isCreateForm, setIsCreateForm] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
+  const fetch = async () => {
     if (userId) {
+      if (projects && projects.length > 0) {
+        return; // ✅ Already have projects, skip fetching
+      }
+
       console.log("Fetching projects for user:", userId);
-      dispatch(fetchProjects(userId));
+      const response = await dispatch(fetchProjects(userId));
+
+      if (response?.data?.message) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response?.data?.message || "Something went wrong");
+      }
     }
-  }, [dispatch, userId]);
+  };
+
+  fetch();
+}, [dispatch, userId, projects]);
+
 
   return (
     <div className="w-full min-h-screen text-white flex flex-col items-center py-10 px-4">

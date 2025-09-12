@@ -13,11 +13,13 @@ function Login() {
   const navigate = useNavigate();
 
   const onSubmit = async (userData) => {
-    await dispatch(loginUser(userData));
-    if ( user) {
-      toast.success(message);
-      navigate('/journal');
-    }
+    const response = await dispatch(loginUser(userData));
+     if (response.data.success) {
+          toast.success(response.data.message)
+          navigate("/journal")
+        } else {
+          toast.error(response.data.message)
+        }
   };
 
   return (

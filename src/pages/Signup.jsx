@@ -12,14 +12,13 @@ function Signup() {
   const navigate = useNavigate();
 
   const onSubmit = async (userData) => {
-    await dispatch(signupUser(userData));
-    if (data.user) {
-      if (message === "User created successfully") {
-        navigate("/update-profile");
-      } else {
-        navigate("/dashboard");
-      }
-    }
+   const response = await dispatch(signupUser(userData));
+    if (response.data.success) {
+         toast.success(response.data.message)
+         navigate("/dashboard")
+       } else {
+         toast.error(response.data.message)
+       }
   };
 
   return (

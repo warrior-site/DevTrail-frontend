@@ -11,6 +11,7 @@ export const fetchJournals = (userId) => {
         `https://devtrail-backend.onrender.com/api/journal/all-journal/${userId}`
       );
       dispatch(setJournal(response.data));
+      return response
     } catch (error) {
       dispatch(setError(error.message));
     } finally {
@@ -46,6 +47,7 @@ export const createJournalAction = (journalData) => {
         journalData
       );
       dispatch(fetchJournals(journalData.userId)); // Refresh list
+      return response;
     } catch (error) {
       dispatch(setError(error.message));
     } finally {

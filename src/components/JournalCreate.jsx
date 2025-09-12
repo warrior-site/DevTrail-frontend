@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createJournalAction } from "../store/journalAction";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function JournalForm({ onSubmit, defaultValues }) {
   const [title, setTitle] = useState(defaultValues?.title || "");
@@ -14,6 +15,7 @@ export default function JournalForm({ onSubmit, defaultValues }) {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const userId = useSelector((state) => state.user.user?._id);
+  const [loading, setloading] = useState(false)
 
   const addTag = () => {
     const t = tagInput.trim();
@@ -56,8 +58,15 @@ export default function JournalForm({ onSubmit, defaultValues }) {
     try {
       setBusy(true);
       const payload = { title, content, tags, visibility, attachments, userId };
+      setloading(true)
       await onSubmit?.(payload);
-      await dispatch(createJournalAction(payload));
+      const response = await dispatch(createJournalAction(payload));
+      setloading(false)
+      if (response.data.message) {
+        toast.success(response.data.message)
+      } else {
+        toast.error(response.data.message)
+      }
     } catch (err) {
       setError(err?.message || "Something went wrong.");
     } finally {
