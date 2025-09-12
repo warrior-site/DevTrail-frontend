@@ -33,7 +33,7 @@ useEffect(() => {
   };
 
   fetch();
-}, [dispatch, userId, projects]);
+}, [dispatch, userId]);
 
 
   return (
