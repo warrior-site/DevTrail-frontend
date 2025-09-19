@@ -47,7 +47,7 @@ export default function SideNavbar() {
           className="text-2xl font-bold mt-8 mb-8 bg-gradient-to-r from-purple-400 via-pink-500 to-red-400 bg-clip-text text-transparent px-4"
           animate={{ opacity: isOpen ? 1 : 0 }}
         >
-          MyApp
+          DevTrail
         </motion.div>
 
         <nav className="flex flex-col gap-4 w-full">
