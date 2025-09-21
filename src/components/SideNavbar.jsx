@@ -1,3 +1,5 @@
+//this is side nav bar
+
 import { NavLink } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Home, LogIn, UserPlus, LayoutDashboard, FileText, Book, Github, Menu, Folder, Kanban } from "lucide-react";
